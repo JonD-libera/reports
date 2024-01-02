@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fields[] = $row['Field'];
             echo "<li><a href='#' class='field-link' data-fields='" . $row['Field'] . "'>" . $row['Field'] . "</a></li>";
         }
-        echo "<li><a href='#' class='field-link' data-fields='" . implode(",", $fields) . "'>" . implode(", ", $fields) . "</a></li>";
     } else {
         echo "Error fetching fields: " . mysqli_error($connection);
     }
