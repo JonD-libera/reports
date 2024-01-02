@@ -36,7 +36,6 @@
     </div>
 
     <script>
-        // JavaScript to handle AJAX requests when a table is clicked
         $(document).ready(function () {
             var selectedTable = ""; // To store the selected table name
             var selectedFields = []; // To store the selected field names
@@ -75,16 +74,20 @@
             function updateQueryText() {
                 var query = "SELECT ";
                 if (selectedFields.length > 0) {
-                    query += selectedFields.join(", ") + " ";
+                    query += "\n";
+                    query += selectedFields.map(function (field) {
+                        return "  " + field;
+                    }).join(",\n");
                 } else {
-                    query += "* ";
+                    query += "*";
                 }
                 if (selectedTable) {
-                    query += "FROM " + selectedTable;
+                    query += "\nFROM " + selectedTable;
                 }
                 $("#query-text").val(query);
             }
         });
+
     </script>
 </body>
 </html>
