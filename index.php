@@ -38,18 +38,41 @@
     <script>
         // JavaScript to handle AJAX requests when a table is clicked
         $(document).ready(function () {
-            $(".table-link").click(function () {
-                var table = $(this).data("table");
-                $.ajax({
-                    url: "get-fields.php",
-                    method: "POST",
-                    data: { table: table },
-                    success: function (data) {
-                        $("#field-list-items").html(data);
-                    }
-                });
+    var selectedTable = ""; // To store the selected table name
+    var selectedFields = []; // To store the selected field names
+
+    $(".table-link").click(function () {
+        selectedTable = $(this).data("table");
+        updateQueryText(); // Update the query when a table is selected
+    });
+
+    $("#field-list").on("click", ".field-link", function () {
+        var field = $(this).data("fields");
+        if (!selectedFields.includes(field)) {
+            selectedFields.push(field);
+        } else {
+            // Remove the field if it's already selected
+            selectedFields = selectedFields.filter(function (value) {
+                return value !== field;
             });
-        });
+        }
+        updateQueryText(); // Update the query when a field is selected/unselected
+    });
+
+    function updateQueryText() {
+        var query = "SELECT ";
+        if (selectedFields.length > 0) {
+            query += selectedFields.join(", ") + " ";
+        } else {
+            query += "* ";
+        }
+        if (selectedTable) {
+            query += "FROM " + selectedTable;
+        }
+        $("#query-text").val(query);
+    }
+});
+
     </script>
 </body>
 </html>
